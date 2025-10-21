@@ -5,23 +5,23 @@ from utils.sim_knowledge_base import corp_knowledge_base
 from utils.semantic_search import *
 
 def load_models():
-    """Loads the generation and embedding models."""
-    print("Loading models...")
-    
-    # Load Gemma 3 for generation
-    gen_pipeline = pipeline(
-        task="text-generation",
-        model="google/gemma-3-4b-it",
-        device_map="auto",
-        dtype="auto"
-    )
+"""Loads the generation and embedding models."""
+print("Loading models...")
 
-    # Load embeddinggemma for retrieval
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    embedding_model_id = "google/embeddinggemma-300M"
-    embedding_model = SentenceTransformer(embedding_model_id).to(device=device)
-    print(f"Embedding model loaded on: {embedding_model.device}")
-    return gen_pipeline, embedding_model
+# Load Gemma 3 for generation
+gen_pipeline = pipeline(
+    task="text-generation",
+    model="google/gemma-3-4b-it",
+    device_map="auto",
+    dtype="auto"
+)
+
+# Load embeddinggemma for retrieval
+device = "cuda" if torch.cuda.is_available() else "cpu"
+embedding_model_id = "google/embeddinggemma-300M"
+embedding_model = SentenceTransformer(embedding_model_id).to(device=device)
+print(f"Embedding model loaded on: {embedding_model.device}")
+return gen_pipeline, embedding_model
 
 
 def retrieve_document(model, question, knowledge_base, threshold):
